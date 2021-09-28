@@ -6,7 +6,7 @@ Data and code for calculating cohort shrinkage index (CSSI) to measure famine se
 ### 1. China_pop.csv
 The cohort size at the national level by birth year from 1900-2000.
 * **Brithyear** represents the birth year of the cohort size.
-* **China** represents the cohort size of the whole China.
+* **China** represents the cohort size at the national level.
 * **Group** represents the two years, 1950 and 1970, as a marker of the time window boundary.
 
 ### 2. Province_pop.csv
@@ -23,30 +23,30 @@ The prefecture-level CSSI.
 * **CSSI_Pre.post** represents prefecture-level CSSI calculated based on pre- & post- famine years (1950-1957 & 1963-1970).
 
 ### 4. Map data
-General data used to make Chinese map.
+Data that are generally used to make Chinese maps.
 
 #### 4.1 gadm36_CHN_1_sf.rds
-Map data for China at province level.
+Map data for China at the province level.
 * **NAME_1** represents the name of the provinces.
 * **geometry** represents geometry data for province mapping.
 
 #### 4.2 gadm36_TWN_0_sf.rds
-Map data for Taiwan at province level.
+Map data for Taiwan at the province level.
 * **NAME_0** represents the name of the region.
 * **geometry** represents geometry data for the region mapping.
 
 #### 4.3 gadm36_CHN_2_sf.rds
-Map data for China at prefecture level.
+Map data for China at the prefecture level.
 * **NAME_1** represents the name of the provinces.
 * **NAME_2** represents the name of the prefectures.
 * **geometry** represents geometry data for prefecture mapping.
 
 #### 4.4 gadm36_TWN_1_sf.rds
-Map data for Taiwan at prefecture level.
+Map data for Taiwan at the prefecture level.
 * **NAME_1** represents the name of the provinces.
 * **NAME_2** represents the name of the prefectures.
 * **geometry** represents geometry data for prefecture mapping.
 
 ## Code
-* **Main analyses1.R** contains code to calculate CSSI at provincial level and regenerate Table 1.
-* **Main analyses2.R** contains code to regenerate the Figure 2-4.
+* **Main analyses1.R** contains code to calculate CSSI at the provincial level and regenerate Table 1.
+* **Main analyses2.R** contains code to regenerate Figure 2-4.
