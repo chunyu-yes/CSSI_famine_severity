@@ -26,23 +26,23 @@ The prefecture-level CSSI.
 Data that are generally used to make Chinese maps.
 
 #### 4.1 gadm36_CHN_1_sf.rds
-Map data for China at the province level.
+Map data for China at province level.
 * **NAME_1** represents the name of the provinces.
 * **geometry** represents geometry data for province mapping.
 
 #### 4.2 gadm36_TWN_0_sf.rds
-Map data for Taiwan at the province level.
+Map data for Taiwan at province level.
 * **NAME_0** represents the name of the region.
 * **geometry** represents geometry data for the region mapping.
 
 #### 4.3 gadm36_CHN_2_sf.rds
-Map data for China at the prefecture level.
+Map data for China at prefecture level.
 * **NAME_1** represents the name of the provinces.
 * **NAME_2** represents the name of the prefectures.
 * **geometry** represents geometry data for prefecture mapping.
 
 #### 4.4 gadm36_TWN_1_sf.rds
-Map data for Taiwan at the prefecture level.
+Map data for Taiwan at prefecture level.
 * **NAME_1** represents the name of the provinces.
 * **NAME_2** represents the name of the prefectures.
 * **geometry** represents geometry data for prefecture mapping.
