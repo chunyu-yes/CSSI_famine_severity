@@ -93,42 +93,11 @@ china_map_province<-left_join(china_map,china_cssi59_61_2,by="NAME_1")
 names(china_map_province)[11:12]<-c('cssi_1','cssi_2')
 china_map_province$provinces_abbreviation[32]<-'TW'
 
-# Input and organize the prefecture-level map data
-tw2 <- readRDS("{path/folder containing your files}/code/gadm36_TWN_1_sf.rds") #Taiwan
-china_map2 <- readRDS("{path/folder containing your files}/code/gadm36_CHN_2_sf.rds") #Chinese Mainland
-names(tw2)[3:10] <- c("GID_2","NAME_2","VARNAME_2","NL_NAME_2","TYPE_2","ENGTYPE_2","CC_2","HASC_2")
-tw2$GID_1 <- "CHN.32_1"
-tw2$NAME_1 <- "Taiwan"
-tw2$NL_NAME_1 <- "台湾"
-tw2 <- tw2[,names(china_map2)]
-china_map2 <- rbind(china_map2,tw2)#combine Taiwan and Chinese Mainland
-
-## Unify the names of provinces of map data and CSSI data
-china_map2$NAME_1[which(china_map2$NAME_1=='Nei Mongol')]<-c('Inner.Mongolia')
-china_map2$NAME_1[which(china_map2$NAME_1=='Ningxia Hui')]<-c('Ningxia')
-china_map2$NAME_1[which(china_map2$NAME_1=='Xinjiang Uygur')]<-c('Xinjiang')
-china_map2$NAME_1[which(china_map2$NAME_1=='Xizang')]<-c('Tibet')
-
-## Input the prefecture-level CSSI 
-prefecture_cssi<-read.csv(file = '{path/folder containing your files}/code/Prefecture_cssi.csv')
-names(prefecture_cssi)[2]<-'NAME_2'
-
-## Unify the names of prefectures of map data and CSSI data
-china_map2$NAME_2[which(china_map2$NAME_2=="Lu'an")]<-c("Liu'an")
-china_map2$NAME_2[which(china_map2$NAME_2=="Suizhou Shi")]<-c("Suizhou")
-china_map2$NAME_2[which(china_map2$NAME_2=="Neijiang]]")]<-c("Neijiang")
-
-## Combine the map data and CSSI data
-china_map_prefecture<-left_join(china_map2,prefecture_cssi,by="NAME_2")
-
-china_map_prefecture$NAME_2[which(is.na(china_map_prefecture$CSSI_Pre)==TRUE)]
-china_map_prefecture$NAME_1[which(is.na(china_map_prefecture$CSSI_Pre)==TRUE)]# 7 prefecture-level CSSI for Taiwan are missing.
-
 #######################################################################
 #                           Figure 3
 #######################################################################
 
-# Set the color palette for map1-4
+# Set the color palette for map1-2
 cbPalette <- c("#99D594","#FFFFB2","#FED976","#FEB24C","#FD8D3C","#FC4E2A","#E31A1C","#B10026")
 
 # Map for province-level CSSI based on data before famine years
@@ -147,64 +116,30 @@ map2 <- ggplot() +
   scale_fill_manual(name='CSSI',values=cbPalette,guide=guide_legend(reverse=T),na.value ="white")+theme_classic()+
   theme(axis.line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank(),axis.title.x=element_blank(),axis.title.y=element_blank(),panel.border = element_blank())
 
-# Map for prefecture-level CSSI based on data before famine years
-map3 <- ggplot() +
-  geom_sf(data = china_map_prefecture,size=0.2,aes(fill =cut(CSSI_Pre,c(-Inf,10,20,30,40,50,60,70,Inf)))) + 
-  geom_sf(data = china_map_province,size=0.5,color='#292421',fill=NA)+
-  coord_sf(crs = "+proj=aeqd +lat_0=37 +lon_0=104")+
-  scale_fill_manual(name='CSSI',values=cbPalette,guide=guide_legend(reverse=T),na.value ="white")+
-  theme_classic()+theme(axis.line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank(),axis.title.x=element_blank(),axis.title.y=element_blank(),panel.border = element_blank())
-
-# Map for prefecture-level CSSI based on data before and after famine years
-map4 <- ggplot() +
-  geom_sf(data = china_map_prefecture,size=0.2,aes(fill =cut(CSSI_Pre.post,c(-Inf,10,20,30,40,50,60,70,Inf)))) + 
-  geom_sf(data = china_map_province,size=0.5,color='#292421',fill=NA)+
-  coord_sf(crs = "+proj=aeqd +lat_0=37 +lon_0=104")+
-  scale_fill_manual(name='CSSI',values=cbPalette,guide=guide_legend(reverse=T),na.value ="white")+
-  theme_classic()+theme(axis.line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank(),axis.title.x=element_blank(),axis.title.y=element_blank(),panel.border = element_blank())
-
-# Exclude 5 special provinces in map5
+# Exclude 5 special provinces in map3
 china_map_province2<-china_map_province
 china_map_province2$cssi_1[which(china_map_province$provinces_abbreviation=='BJ'|china_map_province$provinces_abbreviation=='TJ'|china_map_province$provinces_abbreviation=='SH'|china_map_province$provinces_abbreviation=='XJ'|china_map_province$provinces_abbreviation=='TB')]<-NA
 china_map_province2$cssi_2[which(china_map_province$provinces_abbreviation=='BJ'|china_map_province$provinces_abbreviation=='TJ'|china_map_province$provinces_abbreviation=='SH'|china_map_province$provinces_abbreviation=='XJ'|china_map_province$provinces_abbreviation=='TB')]<-NA
 
-# Set the color palette for map5
+# Set the color palette for map3
 cbPalette2 <- c("#084594","#4292C6","#6BAED6",'#E0E0E0',"#F1B6DA","#DE77AE","#C51B7D","#8E0152")
 # Map for province-level difference of CSSI based on data before famine years
-map5<- ggplot() +
+map3<- ggplot() +
   geom_sf(data = china_map_province2,size=0.5,color='#292421',aes(fill =cut(cssi_1-cssi_2,c(-Inf,-20,-15,-10,-5,5,10,15,20,Inf))))+
   geom_sf_text(data = china_map_province2,aes(label=provinces_abbreviation),size=2)+
   coord_sf(crs = "+proj=aeqd +lat_0=37 +lon_0=104")+
   scale_fill_manual(name='CSSI',values=cbPalette2,guide=guide_legend(reverse=T),na.value ="white")+
   theme_classic()+theme(axis.line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank(),axis.title.x=element_blank(),axis.title.y=element_blank(),panel.border = element_blank())
 
-# Exclude 5 special provinces in map6
-china_map_prefecture2<-china_map_prefecture
-china_map_prefecture2$CSSI_Pre[which(china_map_prefecture$Province=='Beijing'|china_map_prefecture$Province=='Tianjin'|china_map_prefecture$Province=='Shanghai'|china_map_prefecture$Province=='Xinjiang'|china_map_prefecture$Province=='Tibet')]<-NA
-china_map_prefecture2$CSSI_Pre.post[which(china_map_prefecture$Province=='Beijing'|china_map_prefecture$Province=='Tianjin'|china_map_prefecture$Province=='Shanghai'|china_map_prefecture$Province=='Xinjiang'|china_map_prefecture$Province=='Tibet')]<-NA
-
-# Set the color palette for map6
-cbPalette3 <- c("#181d4b","#084594","#4292C6","#6BAED6",'#E0E0E0',"#F1B6DA","#DE77AE","#C51B7D","#8E0152")
-# Map for prefecture-level difference of CSSI based on data before and after famine years
-map6 <- ggplot() +
-  geom_sf(data = china_map_prefecture2,size=0.2,aes(fill =cut(CSSI_Pre-CSSI_Pre.post,c(-Inf,-20,-15,-10,-5,5,10,15,20,Inf))))+ 
-  geom_sf(data = china_map_province2,size=0.5,color='#292421',fill=NA)+
-  coord_sf(crs = "+proj=aeqd +lat_0=37 +lon_0=104")+
-  scale_fill_manual(name='CSSI',values=cbPalette3,guide=guide_legend(reverse=T),na.value ="white")+
-  theme_classic()+theme(axis.line=element_blank(),axis.text.x=element_blank(),axis.text.y=element_blank(),axis.ticks=element_blank(),axis.title.x=element_blank(),axis.title.y=element_blank(),panel.border = element_blank())
-
 # Output
 w_in <- conv_unit(54, "cm",'inch')
-h_in <- conv_unit(36, "cm",'inch')
+h_in <- conv_unit(18, "cm",'inch')
 pdf("fig3_look.pdf", width =w_in, height =h_in)
 grid.newpage()
-pushViewport(viewport(layout = grid.layout(2,3)))
+pushViewport(viewport(layout = grid.layout(1,3)))
 print(map1,vp = viewport(layout.pos.row = 1, layout.pos.col = 1))
 print(map2,vp = viewport(layout.pos.row = 1, layout.pos.col = 2))
-print(map3,vp = viewport(layout.pos.row = 2, layout.pos.col = 1))
-print(map4,vp = viewport(layout.pos.row = 2, layout.pos.col = 2))
-print(map5,vp = viewport(layout.pos.row = 1, layout.pos.col = 3))
-print(map6,vp = viewport(layout.pos.row = 2, layout.pos.col = 3))
+print(map3,vp = viewport(layout.pos.row = 1, layout.pos.col = 3))
 dev.off()
 
 #######################################################################
