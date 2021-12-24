@@ -5,12 +5,12 @@
 
 # Input the population data 
 ## Input the national population data
-china_pop<-read.csv('{path/folder containing your files}/code/China_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
+china_pop<-read.csv('{path/folder containing your files}/CSSI_famine_severity-main/data/China_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
 ## Input the provincial population data
-province_pop<-read.csv('{path/folder containing your files}/code/Province_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
-
+province_pop<-read.csv('{path/folder containing your files}/CSSI_famine_severity-main/data/Province_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
+names(province_pop)<-c('year','BJ','TJ','HeB','SX','IM','LN','JL','HLJ','SH','JS','ZJ','AH','FJ','JX','SD','HeN','HuB','HuN','GD','GX','SC','GZ','YN','TB','SaX','GS','QH','NX','XJ')
 #######################################################################
-#                       Estimate provincial CSSI---Table 1
+#                       Estimate provincial CSSI---Table S3
 #######################################################################
 
 # Calculate the slope and intercept of the linear trend
@@ -47,9 +47,15 @@ View(china_cssi59_61)
 china_cssi59_61<-data.frame(round(linear.pre,1),rank(-linear.pre),round(linear.pre.post,1),rank(-linear.pre.post),round(linear.mean,1),rank(-linear.mean),round(linear.difference,1),rank(-linear.difference)) # Add the ranking
 names(china_cssi59_61)<-c('round.linear.pre','rank.linear.pre','round.linear.pre.post','rank.linear.pre.post','round.linear.mean','rank.linear.mean','round.linear.difference','rank.linear.difference')
 china_cssi59_61$X<-china_pop59_61$X
-china_cssi59_61<-china_cssi59_61[order(china_cssi59_61$rank.linear.mean),] #Table 1
+china_cssi59_61<-china_cssi59_61[order(china_cssi59_61$rank.linear.mean),] 
 
+china_cssi59_61_2<-china_cssi59_61[c(1:20,22:24,26),] 
+china_cssi59_61_2$rank.linear.pre<-rank(-china_cssi59_61_2$round.linear.pre)
+china_cssi59_61_2$rank.linear.pre.post<-rank(-china_cssi59_61_2$round.linear.pre.post)
+china_cssi59_61_2$rank.linear.mean<-rank(-china_cssi59_61_2$round.linear.mean)
+View(china_cssi59_61_2) #TableS3
+
+china_cssi59_61_2000_birth<-china_cssi59_61_2
 ### The prefecture level CSSIs were also calculated in this way.
 ### The raw population data on prefecture level to calculate the CSSI were not uploaded. The prefecture-level CSSI was provided instead. 
-###china_cssi59_61 will be used in Main analyses2.R
-
+### china_cssi59_61_2000_birth will be used in Main analyses2.R
