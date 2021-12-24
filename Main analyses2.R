@@ -18,9 +18,9 @@ library(sf)
 
 # Input the population data 
 ## Input the national population data
-china_pop<-read.csv('/Users/liuchunyu/Documents/Lumey New/CSSI_famine_severity-main/data/China_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
+china_pop<-read.csv('{path/folder containing your files}/CSSI_famine_severity-main/data/China_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
 ## Input the provincial population data
-province_pop<-read.csv('/Users/liuchunyu/Documents/Lumey New/CSSI_famine_severity-main/data/Province_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
+province_pop<-read.csv('{path/folder containing your files}/CSSI_famine_severity-main/data/Province_pop.csv') #source: 2000 census from 'https://international.ipums.org/international/'
 
 
 #######################################################################
