@@ -12,7 +12,7 @@ The cohort size at the national level by birth year from 1900-2000.
 ### 2. Province_pop.csv
 The cohort size at the provincial level by birth year from 1950-1970.
 * **Birthyear** represents the birth year of the cohort size.
-*  **Beijing, Tianjin, ..., Xinjiang** represents the cohort size of different provinces.
+* **Beijing, Tianjin, ..., Xinjiang** represents the cohort size of different provinces.
 
 ### 3. prefecture_cssi.csv
 The prefecture-level CSSI.
@@ -22,19 +22,11 @@ The prefecture-level CSSI.
 * **CSSI_Pre** represents prefecture-level CSSI calculated based on pre-famine years (1950-1957).
 * **CSSI_Pre.post** represents prefecture-level CSSI calculated based on pre- & post- famine years (1950-1957 & 1963-1970).
 
-### 4. Map data
-Data that are generally used to make Chinese maps.
-
-#### 4.1 gadm36_CHN_1_sf.rds
+### 4. Chinamapdata.json
 Map data for China at province level.
-* **NAME_1** represents the name of the provinces.
+* **name** represents the name of the provinces.
 * **geometry** represents geometry data for province mapping.
 
-#### 4.2 gadm36_TWN_0_sf.rds
-Map data for Taiwan at province level.
-* **NAME_0** represents the name of the region.
-* **geometry** represents geometry data for the region mapping.
-
 ## Code
-* **Main analyses1.R** contains code to calculate CSSI at the provincial level and regenerate Table 1.
-* **Main analyses2.R** contains code to regenerate Figure 2-4.
+* **Main analyses1.R** contains code to calculate CSSI at the provincial level and regenerate Table S3.
+* **Main analyses2.R** contains code to regenerate Figure 2-3.
